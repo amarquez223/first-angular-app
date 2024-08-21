@@ -1,0 +1,101 @@
+<!--
+<h2 *ngIf="isLoggedIn; else message">{{ userName }}</h2>
+<h2 *ngIf="!isLoggedIn">No User logged in</h2>
+
+<ng-template #message>
+  <h2>No User logged in (using ng-template)</h2>
+</ng-template>
+
+
+@if (isLoggedIn) {
+  <h3>{{ userName }}</h3>
+}
+@else {
+  <h3>No User logged in (using else syntax block)</h3>
+}
+
+
+@if (loginCount <= 3) {
+  <button (click)="countLogInAttempts()">Log In</button>
+}
+@else {
+  <h4>Número de intentos excedido</h4>
+}
+
+@if (userRole == "Admin") {
+  <h4>Welcome Admin</h4>
+}
+@else {
+  <h4>Welcome User</h4>
+}
+
+<ng-template #callToAction>
+  <button>Join Now</button>
+</ng-template>
+
+<div [ngTemplateOutlet]="callToAction">
+  <h5>Sidebar</h5>
+</div>
+<div [ngTemplateOutlet]="callToAction">
+  <h5>Hero</h5>
+</div>
+<div [ngTemplateOutlet]="callToAction">
+  <h5>Footer</h5>
+</div>
+
+<h3>{{ users }}</h3>
+
+<h3>{{ users[0] }}</h3>
+<h3>{{ users[1] }}</h3>
+<h3>{{ users[2] }}</h3>
+<h3>{{ users[3] }}</h3>
+
+<h3 *ngFor="let user of users" >{{ user }}</h3>
+
+@for (user of users; track user) {
+  <h3>{{ user }} - Loaded for syntax block</h3>
+}
+<ul>
+  <li *ngFor="let user of users">{{ user }}</li>
+</ul>
+
+<ul>
+  @for (user of users; track user) {
+    <li>{{ user }}</li>
+  }
+</ul>
+-->
+
+<div *ngIf="usersObj.length == 0">
+  <p>No users to display</p>
+</div>
+
+<ul>
+  <li *ngFor="let user of usersObj; let i = index; let usersCount = count">
+    {{ i }} of {{ usersCount }} {{ user.email }} <button (click)="deleteUser(i)">Delete</button>
+  </li>
+</ul>
+
+<ul>
+  @for (user of usersObj; track user;
+        let i = $index;
+        let uc = $count;
+        let first = $first;
+        let last = $last;
+        let even = $even;
+        let odd = $odd;
+        ) {
+    <li>
+      {{ first }} {{ last }} {{ even }} {{ odd }} {{ i }} of {{ uc }} {{ user.name }}
+      <button (click)="deleteUser(i)">Delete</button>
+    </li>
+  }
+  @empty {
+    <p>No users to display</p>
+  }
+</ul>
+
+<button (click)="addNewUser()">Add New User</button>
+
+
+
