@@ -8,17 +8,17 @@ import { Observable } from 'rxjs';
 })
 export class PositionsService {
 
-  private apiUrl = 'http://localhost:3006/v1/positions/1';
+  private apiUrl = 'http://localhost:3006/v1/positions/';
 
   constructor(private http:HttpClient) { }
 
-  getPositions(): Observable<PositionsDTO[]> {
+  getPositions(id: number): Observable<PositionsDTO[]> {
 
     const headers = new HttpHeaders({
       'X-User-Email': 'anderson.marquez@gmail.com',
       'X-User-Token': 'C-uQ1YPNksVqTdJwa9RM',
     })
 
-    return this.http.get<PositionsDTO[]>(this.apiUrl, { headers })
+    return this.http.get<PositionsDTO[]>(this.apiUrl + id, { headers })
   }
 }

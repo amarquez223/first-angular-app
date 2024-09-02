@@ -57,31 +57,182 @@
 
 <br>
 <br>
--->
 
-<table>
-  <th>Posición</th>
-  <th>Equipo</th>
-  <th>PJ</th>
-  <th>G</th>
-  <th>E</th>
-  <th>P</th>
-  <th>GF</th>
-  <th>GC</th>
-  <th>DG</th>
-  <th>Puntos</th>
-  @for (dato of pdatos; track dato) {
-    <tr>
-      <td>{{ $index + 1 }}</td>
-      <td>{{ dato["teamname"] }}</td>
-      <td>{{ dato["tplayedgames"] }}</td>
-      <td>{{ dato["twongames"] }}</td>
-      <td>{{ dato["ttiedgames"] }}</td>
-      <td>{{ dato["tlostgames"] }}</td>
-      <td>{{ dato["tscoredgoals"] }}</td>
-      <td>{{ dato["tagainstgoals"] }}</td>
-      <td>{{ dato["tdifgoals"] }}</td>
-      <td>{{ dato["totalpoints"] }}</td>
-    </tr>
-  }
-</table>
+
+<h1>{{ title2 }}</h1>
+<button (click)="uppercase()" type="button"
+class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">uppercase</button>
+
+<h1>{{ title2 | uppercase }}</h1>
+
+<h1>{{ 1234567.89 | number }}</h1>
+<h1>{{ 1234567.89 | currency: 'GBP' }}</h1>
+
+<h1>{{ today | date: 'short' }} - Short</h1>
+<h1>{{ today | date: 'medium' }} - Medium</h1>
+<h1>{{ today | date: 'long' }} - Long</h1>
+<h1>{{ today | date: 'full' }} - Full</h1>
+
+<h1>{{ today | date: 'YYYY-MM-dd' }}</h1>
+<h1>{{ today | date: 'YYYY-MMM-dd' }}</h1>
+
+<h1>{{ today | date: 'hh:mm:ss a z' }}</h1>
+
+<h1>{{ user }}</h1>
+<button (click)="convertJson()" type="button"
+class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Convert JSON</button>
+<h1>{{ user | json  }}</h1>
+
+<h1>{{ 'Hello Angular World' | slice : 6 : 13 }}</h1>
+<h1>{{ 'Hello Angular World' | slice : 6 : 13 | uppercase }}</h1>
+
+<br>
+-->
+<!-- Tailwind
+<div class="text-gray-600 grid md:grid-cols-3">
+  <div class="md:col-span-1">
+    <nav>
+      <div>
+        <h1 class="font-bold uppercase p-4 border-b border-gray-100">
+          <a href="/" class="text-green-500 sm:text-red-500 md:text-purple-500">Food Ninja</a>
+        </h1>
+      </div>
+      <ul>
+        <li class="text-gray-700 font-bold">
+          <a href="#">
+            <span>Home</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <span>About</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <span>Contact</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <main class="px-16 py-6 bg-gray-300 md:col-span-2">
+    <div class="flex justify-center md:justify-end">
+      <a href="#" class="text-red-700">Log in</a>
+      <a href="#" class="text-red-700 ml-2">Sign up</a>
+    </div>
+
+    <div class="flex items-center">
+      <div class="bg-red-500 h-4 w-6"></div>
+      <div class="bg-blue-500 h-8 w-6"></div>
+      <div class="bg-green-500 h-12 w-6"></div>
+    </div>
+
+    <header>
+      <h2 class="text-gray-700 text-6xl font-semibold">Recipes</h2>
+      <h3 class="text-2xl font-semibold">For Ninjas</h3>
+    </header>
+
+    <div>
+      <h4 class="font-bold mt-12 pb-2 border-b border-gray-200">Latest Recipes</h4>
+
+      <div class="mt-8 grid lg:grid-cols-3 gap-10">
+         <div class="card">
+          <img src="stew.png" alt="stew" class="w-full h-32 sm:h-64 object-cover">
+          <div class="m-4">
+            <span class="font-bold">5 Bean Chilli Stew</span>
+            <span class="block text-gray-700 text-sm">Recipe by Mario</span>
+          </div>
+          <div class="badge">
+            <span>25 mins</span>
+          </div>
+         </div>
+         <div class="card">
+          <img src="noodles.png" alt="noodles" class="w-full h-32 sm:h-64 object-cover">
+          <div class="m-4">
+            <span class="font-bold">Veg Noodles</span>
+            <span class="block text-gray-700 text-sm">Recipe by Mario</span>
+          </div>
+          <div class="badge">
+            <span>25 mins</span>
+          </div>
+         </div>
+         <div class="card">
+          <img src="curry.png" alt="curry" class="w-full h-32 sm:h-64 object-cover">
+          <div class="m-4">
+            <span class="font-bold">Great Curry</span>
+            <span class="block text-gray-700 text-sm">Recipe by Mario</span>
+          </div>
+          <div class="badge">
+            <span>25 mins</span>
+          </div>
+         </div>
+      </div>
+
+      <h4 class="font-bold mt-12 pb-2 border-b border-gray-200">Most Popular</h4>
+
+      <div class="mt-8">
+      </div>
+
+      <div class="flex justify-center">
+        <div>Load more</div>
+      </div>
+
+    </div>
+
+  </main>
+</div>
+Fin Tailwind -->
+
+
+<div class="grid grid-cols-12">
+  <div class="col-span-2">
+    <form [formGroup]="form">
+      <!--
+        <select formControlName="tournament" [(ngModel)]="tournaments" (ngModelChange)="onSelectChange($event)">
+      -->
+      <select formControlName="tournament" (ngModelChange)="onSelectChange($event)">
+        <option *ngFor="let tournament of tournaments" [ngValue]="tournament">
+          {{ tournament.id + "-" + tournament.name }}
+        </option>
+      </select>
+    </form>
+
+    <p>Form value: {{ form.value | json }}</p>
+  </div>
+
+  <div class="col-span-10">
+
+    <p-table [value]="pdatos" styleClass="p-datatable-sm" [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Posición</th>
+          <th>Equipo</th>
+          <th>PJ</th>
+          <th>G</th>
+          <th>E</th>
+          <th>P</th>
+        <th>GF</th>
+        <th>GC</th>
+        <th>DG</th>
+        <th>Puntos</th>
+      </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-dato>
+        <tr>
+          <td>{{ dato["position"] }}</td>
+          <td>{{ dato["teamname"] }}</td>
+          <td>{{ dato["tplayedgames"] }}</td>
+          <td>{{ dato["twongames"] }}</td>
+          <td>{{ dato["ttiedgames"] }}</td>
+          <td>{{ dato["tlostgames"] }}</td>
+          <td>{{ dato["tscoredgoals"] }}</td>
+          <td>{{ dato["tagainstgoals"] }}</td>
+          <td>{{ dato["tdifgoals"] }}</td>
+          <td>{{ dato["totalpoints"] }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
