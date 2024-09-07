@@ -8,11 +8,12 @@ import { PostsListComponent } from './posts-list/posts-list.component';
 import { CardComponent } from "./card/card.component";
 import { CommonModule, NgComponentOutlet, SlicePipe, UpperCasePipe } from '@angular/common';
 import { ProfileComponent } from './profile/profile.component';
-import { FrankfurterService } from './services/frankfurter.service';
-import { PositionsService } from './services/positions.service';
+import { FootballService } from './services/football.service';
 import { PositionsDTO } from './models/positions';
 import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
+import { ChartModule } from 'primeng/chart';
+import { GoalsByCountryDTO } from './models/goals_by_country';
 
 @Component({
   selector: 'app-root',
@@ -32,7 +33,8 @@ import { InputTextModule } from 'primeng/inputtext';
             UpperCasePipe,
             FormsModule,
             ReactiveFormsModule,
-            SlicePipe
+            SlicePipe,
+            ChartModule
           ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
@@ -87,36 +89,77 @@ export class AppComponent implements AfterViewInit, OnInit {
     tournament: new FormControl(this.tournaments[0])
   });
 
+  data: any;
+
+  options: any;
+
+  goalsByCountry: any;
+  countries: any;
+  scoredGoals: any;
+  ownGoals: any;
+  array: any = [];
+
   constructor( private viewContainer: ViewContainerRef,
-    private frankfurter: FrankfurterService,
-    private positions: PositionsService) {
+    private football: FootballService) {
     //console.log(this.childVariables);
   }
 
   ngOnInit(): void {
-    this.frankfurter.getLatest()
-      .subscribe((data: any) => {
-        //console.log(data.rates);
-        this.datos = data.rates
-        this.values = Object.values(this.datos)
-        this.keys = Object.keys(this.datos)
-      });
+    // El valor por defecto es el primer torneo de la lista
+    this.showPositions(this.tournaments[0].id);
 
-    this.positions.getPositions(1)
+    this.showGoalsByCountry(this.tournaments[0].id);
+
+
+
+    }
+
+  showPositions(value: number) {
+    this.counter = 0
+    this.football.getPositions(value)
       .subscribe((pdata: PositionsDTO[]) => {
+        console.log(this.form.value.tournament?.id);
         console.log(pdata);
         this.pdatos = pdata.sort((a, b) => {
           return (this.orderPositions(a, b))
           });
 
-        // Adiciona la posición en cada arreglo
-        this.pdatos.map((e:any) => {
-          e["position"] = ++this.counter;
-          return e
-          }
-        )
+      // Adiciona la posición en cada arreglo
+      this.pdatos.map((e:any) => {
+        e["position"] = ++this.counter;
+        return e
+        }
+      )
 
-      })
+    })
+  }
+
+  showGoalsByCountry(value: number) {
+    console.log("Inicio de showGoalsByCountry " + value);
+
+    this.football.getGoalsByCountry(value)
+      .subscribe((pdata: GoalsByCountryDTO[]) => {
+        this.countries = pdata.map((pos:any) => pos["country"]);
+        this.scoredGoals = pdata.map((pos:any) => pos["scoredgoals"]);
+        this.ownGoals = pdata.map((pos:any) => pos["owngoals"]);
+
+        this.data = {
+          labels: this.countries,
+          datasets: [
+            {
+              label: 'Goles',
+              data: this.scoredGoals
+            },
+            {
+              label: 'Autogoles',
+              data: this.ownGoals
+            }
+          ]
+        };
+
+        this.options = {};
+            pdata
+        })
   }
 
   orderPositions(a: any,b: any) {
@@ -208,7 +251,8 @@ export class AppComponent implements AfterViewInit, OnInit {
   }
 
   onSelectChange(value: any) {
-    console.log("Cambió. Nuevo valor: " + value.id);
+    this.showPositions(value.id)
+    this.showGoalsByCountry(value.id)
   }
 
 }
